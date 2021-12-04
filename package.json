@@ -1,0 +1,25 @@
+{
+  "name": "graphql-tut-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boetzels/graphql-tut-be.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/boetzels/graphql-tut-be/issues"
+  },
+  "homepage": "https://github.com/boetzels/graphql-tut-be#readme",
+  "dependencies": {
+    "apollo-server": "^2.25.3",
+    "Express": "^3.0.1",
+    "graphql": "^14.7.0"
+  }
+}
