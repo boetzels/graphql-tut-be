@@ -1,10 +1,17 @@
 const { ApolloServer } = require('apollo-server');
 
 const { PrismaClient } = require('@prisma/client');
-const { APP_SECRET, getUserId } = require('../utils');
 
 const fs = require('fs');
 const path = require('path');
+
+const { APP_SECRET, getUserId } = require('./utils');
+
+// resolvers
+const Query = require('./resolvers/Query');
+const Mutation = require('./resolvers/Mutation');
+const Link = require('./resolvers/Link');
+const User = require('./resolvers/User');
 
 const prisma = new PrismaClient()
 
@@ -28,42 +35,10 @@ const prisma = new PrismaClient()
 
 
 const resolvers = {
-    Query: {
-        info: () => `This is a GraphQL-API test`,
-        feed: async (parent, args, context) => {
-            return context.prisma.link.findMany();
-        },
-        link: (id) => links[id],
-    },
-
-    Mutation: {
-        createLink: (parent, args, context) => {
-            return newLink = context.prisma.link.create({
-                data: {
-                    description: args.description,
-                    url: args.url,
-                }
-            });
-        },
-
-        updateLink: (parent, args, context) => {
-            return newLink = context.prisma.link.update({
-                data: {
-                    description: args.description,
-                    url: args.url,
-                }
-            });
-        },
-
-        deleteLink: (parent, args) => {
-            return newLink = context.prisma.link.update({
-                data: {
-                    description: args.description,
-                    url: args.url,
-                }
-            });
-        },
-    },
+    Query,
+    Mutation,
+    Link,
+    User,
 }
 
 const server = new ApolloServer({

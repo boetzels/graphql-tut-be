@@ -7,9 +7,9 @@ function getTokenPayload(token) {
 
 function getUserId(req, authToken) {
     if (req) {
-        const authHeader = req.header.authorization;
+        const authHeader = req.headers.authorization;
 
-        console.log('authHeader', authHeader);
+        console.log('using authHeader: ', authHeader);
 
         if (authHeader) {
             const token = authHeader.replace('Bearer ', '');
@@ -23,6 +23,7 @@ function getUserId(req, authToken) {
         }
     }
     else if (authToken) {
+        console.log('using authToken', authToken);
         const { userId } = getTokenPayload(token);
         return userId;
     }
@@ -30,7 +31,12 @@ function getUserId(req, authToken) {
     throw new Error('Not authenticated');
 }
 
+function getToken(signArgs) {
+    return jwt.sign(signArgs, APP_SECRET)
+}
+
 module.exports = {
     APP_SECRET,
     getUserId,
+    getToken,
 }

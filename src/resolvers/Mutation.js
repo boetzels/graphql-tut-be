@@ -1,16 +1,18 @@
 const bcrypt = require('bcryptjs');
-const { APP_SECRET, getUserId } = require('../utils');
+const { getToken, getUserId } = require('../utils');
 
 async function signUp(parent, args, context, info) {
     const pw = await bcrypt.hash(args.password, 10);
-    console.log('pw', pw);
+    delete args.password;
 
-    const user = await context.prisma.user.create(data:{
-        ...args,
-        pw,
+    const user = await context.prisma.user.create({
+        data:{
+            ...args,
+            pw,
+        }
     });
 
-    const token = jwt.sign({userId: user.id,}, APP_SECRET);
+    const token = getToken({userId: user.id,});
 
     return {
         token,
@@ -31,7 +33,7 @@ async function signIn(parent, args, context, info) {
         throw new Error('invalid pw')
     }
 
-    const token = jwt.sign({userId: user.id,}, APP_SECRET);
+    const token = getToken({userId: user.id,});
 
     return {
         token,
@@ -42,11 +44,13 @@ async function signIn(parent, args, context, info) {
 async function createLink(parent, args, context) {
     const { userId } = context;
 
+    console.log('userId', userId);
+
     return await context.prisma.link.create({
         data: {
             description: args.description,
             url: args.url,
-            user_id: { connect: { id: userId }}
+            user: { connect: { id: userId }}
         }
     });
 }
