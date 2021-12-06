@@ -4,19 +4,46 @@ type Query {
     link(id: ID!): Link
 }
 
-type Link {
-    id: ID!
-    description: String!
-    url: String!
-}
 
 type Mutation {
     createLink (
         url: String!,
         description: String!
     ): Link!
+
+    signUp(
+        email:String!
+        password:String!
+        name:String!
+    ): AuthPayload
+
+    signIn(
+        email:String!
+        password:String!
+    ): AuthPayload
     
     updateLink(id: ID!, url: String, description: String): Link
 
     deleteLink(id: ID!): Link
+}
+
+"""
+type definitions
+"""
+type Link {
+    id: ID!
+    description: String!
+    url: String!
+    postedBy: User
+}
+
+type AuthPayload {
+    token: String
+    user: User
+}
+
+type User {
+    id: ID!
+    name: String!
+    links: [Link!]!
 }

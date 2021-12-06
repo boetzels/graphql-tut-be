@@ -107,3 +107,4 @@ dist
 
 # SQLite db files
 *.db
+*.db-journal
