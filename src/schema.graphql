@@ -21,10 +21,21 @@ type Mutation {
         email:String!
         password:String!
     ): AuthPayload
+
+    vote (
+        linkId: ID!
+    ): Vote
     
     updateLink(id: ID!, url: String, description: String): Link
 
     deleteLink(id: ID!): Link
+}
+
+"""
+Subscriptions
+"""
+type Subscription {
+    newLink: Link
 }
 
 """
@@ -34,7 +45,8 @@ type Link {
     id: ID!
     description: String!
     url: String!
-    postedBy: User
+    user: User
+    votes: [Vote!]!
 }
 
 type AuthPayload {
@@ -46,4 +58,10 @@ type User {
     id: ID!
     name: String!
     links: [Link!]!
+}
+
+type Vote {
+    id: ID!
+    link: Link!
+    user: User!
 }
