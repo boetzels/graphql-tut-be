@@ -44,15 +44,17 @@ async function signIn(parent, args, context, info) {
 async function createLink(parent, args, context) {
     const { userId } = context;
 
-    console.log('userId', userId);
-
-    return await context.prisma.link.create({
+    const newLink = await context.prisma.link.create({
         data: {
             description: args.description,
             url: args.url,
             user: { connect: { id: userId }}
         }
     });
+
+    context.pubSub.publish('NEW_LINK',newLink);
+
+    return newLink;
 }
 
 module.exports = {
