@@ -9,8 +9,6 @@ function getUserId(req, authToken) {
     if (req) {
         const authHeader = req.headers.authorization;
 
-        console.log('using authHeader: ', authHeader);
-
         if (authHeader) {
             const token = authHeader.replace('Bearer ', '');
 

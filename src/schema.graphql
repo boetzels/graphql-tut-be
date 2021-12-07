@@ -36,6 +36,7 @@ Subscriptions
 """
 type Subscription {
     newLink: Link
+    newVote: Vote
 }
 
 """

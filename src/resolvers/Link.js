@@ -5,7 +5,15 @@ function user(parent, args, context) {
         }
     }).user();
 }
+function votes(parent, args, context) {
+    return context.prisma.vote.findUnique({
+        where: {
+            id: parent.id
+        }
+    }).votes();
+}
 
 module.exports = {
     user,
+    votes,
 }
